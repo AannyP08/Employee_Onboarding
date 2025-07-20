@@ -5,12 +5,24 @@ Automating Employee Onboarding with Power Automate
 This project automates the employee onboarding process using **Power Automate**, **Microsoft Forms**, and **Entra ID (Azure AD)**. It streamlines user creation, access provisioning, and email notifications to deliver a seamless onboarding experience.
 
 ---
-
 ## 🚀 Flow Overview
 
-The Power Automate flow is triggered when a new employee response is submitted via a Microsoft Form. The automation then proceeds through several stages including account creation, group assignment, application provisioning, and sending emails.
+This Power Automate flow is designed to automate the end-to-end process of onboarding new employees using Microsoft 365, Entra ID (Azure AD), and business system integrations. It reduces manual tasks, enforces consistent provisioning practices, and improves communication between departments (HR, IT, and Managers).
 
+🎯 **Key Benefits**
+Benefit	Description
 
+✅ Time-Saving	Automates repetitive tasks like user creation, group assignment, license allocation, and email notifications.
+
+✅ Error Reduction	Eliminates manual data entry errors by pulling structured data directly from Microsoft Forms.
+
+✅ Scalable	Supports dynamic group and license assignment for any number of business units or job roles.
+
+✅ Secure	Ensures best practices by integrating with Entra ID (Azure AD) for access control and provisioning.
+
+✅ Consistent Communication	Automatically notifies managers and stakeholders with personalized onboarding info.
+
+✅ Extensible	Includes logic to trigger business system configurations or helpdesk tickets (like ITSM or Ninja).
 
 ---
 
@@ -27,33 +39,47 @@ The Power Automate flow is triggered when a new employee response is submitted v
 
 ## 🔄 Flow Steps Breakdown
 
-### 1. **Trigger**: New form response submitted  
-### 2. **Retrieve response details**
-### 3. **Generate random password**
-### 4. **Set mail nickname**
-### 5. **Initialize distribution groups array**
-### 6. **Get Manager details from form**
-### 7. **Create user in Azure AD**
-### 8. **Assign manager to user**
-### 9. **Assign license**
-### 10. **Notify HR Manager via email**
-### 11. **Delay for processing**
-### 12. **Update user details (Title, Dept, Mobile)**
-### 13. **Get groups of a mirror user**
-### 14. **Loop through groups and replicate memberships**
-### 15. **Add user to Distribution Groups (if not already)**
-### 16. **Parse business application access**
-### 17. **Handle app-specific provisioning (Switch logic)**
-### 18. **Create helpdesk ticket with user details**
-### 19. **Wait until start date**
-### 20. **Send welcome email with MFA setup instructions**
+1. **Trigger on Form Submission**
+   Uses Microsoft Forms to collect onboarding information (e.g., name, department, job role, manager).
+   The flow is triggered when a response is submitted.
+
+2. **Initialize Core User Details**
+   Generate secure password for the new user.
+   Set nickname and prepare group logic using variables and expressions.
+
+3. **Get Group Membership Logic**
+   Dynamically checks existing Microsoft 365 / Entra ID groups to:
+   Distinguish distribution groups vs. security groups.
+   Avoid dynamic groups (read-only).
+   Filter and map applicable groups for the user.
+
+4. **Create the User in Entra ID**
+   Creates the user with key attributes including:
+   Display Name, UPN, Department, Job Title.
+   Initial password setup.
+
+5. **Assign Organizational Attributes**
+   Assigns:Manager (from Form)
+   Licenses (via Graph API or built-in connector)
+   Groups based on role/business unit
+
+6. **Send Notifications**
+   Sends an email to the manager/HR notifying that the user has been created successfully and is being provisioned.
+
+7. **Add to Business Applications**
+   Uses a Loop + Switch block to configure the user in appropriate business systems (e.g., Ninja, ERP, CRM).
+   Optional: Generates a helpdesk ticket for manual configuration steps.
+
+8. **Send Welcome Email to the Employee**
+
+Final step: Sends a customized welcome email to the new user with relevant links, credentials, or onboarding documents and instructions on how to set up Microsoft authenticator.
 
 ---
 
 ## 📎 Screenshots
 
 Flow diagram:  
-![Flow Diagram](flow-diagram/merged_flow.png)
+<img width="1090" height="2184" alt="merged_power_automate_flow_v2" src="https://github.com/user-attachments/assets/49a8081c-62b5-40db-bedd-cb5e21e63f9e" />
 
 ---
 
@@ -67,11 +93,18 @@ Flow diagram:
 
 ## 📝 License
 
-This project is open source and available under the [MIT License](LICENSE).
+| Component                     | License Required                        |
+| ----------------------------- | --------------------------------------- |
+| Power Automate Flow           | Power Automate Per User / Per Flow Plan |
+| Microsoft Forms               | Microsoft 365 License                   |
+| Azure AD / Entra ID           | M365 E3/E5 or Azure AD Premium P1/P2    |
+| Outlook (Send Email)          | Microsoft 365 License                   |
+| Premium Connectors (HTTP, AD) | Power Automate Premium                  |
 
 ---
 
 ## 🙋‍♂️ Author
 
-**Your Name**  
-[LinkedIn](https://www.linkedin.com/in/your-profile)  
+**Aniket Posture**  
+https://www.linkedin.com/in/aniket-posture-b08175119/
+
